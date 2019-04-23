@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="default" Description="Default EventR code analysis ruleset" ToolsVersion="15.0">
+  <Rules AnalyzerId="AsyncUsageAnalyzers" RuleNamespace="AsyncUsageAnalyzers">
+    <Rule Id="UseConfigureAwait" Action="None" /><!-- expected to be used in library code -->
+  </Rules>
+  <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
+    <Rule Id="CA1010" Action="None" /><!-- CollectionsShouldImplementGenericInterface -->
+    <Rule Id="CA1019" Action="None" /><!-- DefineAccessorsForAttributeArguments -->
+    <Rule Id="CA1032" Action="None" /><!-- ImplementStandardExceptionConstructors -->
+    <Rule Id="CA1034" Action="None" /><!-- NestedTypesShouldNotBeVisible -->
+    <Rule Id="CA1040" Action="None" /><!-- AvoidEmptyInterfaces -->
+    <Rule Id="CA1051" Action="None" /><!-- DoNotDeclareVisibleInstanceFields; turn them into props when needed, uniform access principle is not violated -->
+    <Rule Id="CA1056" Action="None" /><!-- UriPropertiesShouldNotBeStrings -->
+    <Rule Id="CA1305" Action="None" /><!-- SpecifyIFormatProvider; used mostly in cases when format provider means no difference -->
+    <Rule Id="CA1307" Action="None" /><!-- SpecifyStringComparison; used mostly in cases when string comparison means no difference -->
+    <Rule Id="CA1308" Action="None" /><!-- NormalizeStringsToUppercase -->
+    <Rule Id="CA1714" Action="None" /><!-- FlagsEnumsShouldHavePluralNames -->
+    <Rule Id="CA1716" Action="None" /><!-- IdentifiersShouldNotMatchKeywords -->
+    <Rule Id="CA1724" Action="None" /><!-- TypeNamesShouldNotMatchNamespaces -->
+    <Rule Id="CA1819" Action="None" /><!-- PropertiesShouldNotReturnArrays -->
+    <Rule Id="CA2225" Action="None" /><!-- OperatorOverloadsHaveNamedAlternates -->
+    <Rule Id="CA2227" Action="None" /><!-- CollectionPropertiesShouldBeReadOnly -->
+  </Rules>
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA1101" Action="None" /><!-- PrefixLocalCallsWithThis -->
+    <Rule Id="SA1108" Action="None" /><!-- BlockStatementsMustNotContainEmbeddedComments -->
+    <Rule Id="SA1124" Action="None" /><!-- DoNotUseRegions -->
+    <Rule Id="SA1502" Action="None" /><!-- ElementMustNotBeOnASingleLine -->
+    <Rule Id="SA1512" Action="None" /><!-- SingleLineCommentsMustNotBeFollowedByBlankLine -->
+    <Rule Id="SA1515" Action="None" /><!-- SingleLineCommentsMustBePrecededByBlankLine -->
+
+    <!-- Documentation Rules: all off; forced documentation is abomination -->
+    <Rule Id="SA1600" Action="None" /><!-- ElementsMustBeDocumented -->
+    <Rule Id="SA1601" Action="None" /><!-- PartialElementsMustBeDocumented -->
+    <Rule Id="SA1602" Action="None" /><!-- EnumerationItemsMustBeDocumented -->
+    <Rule Id="SA1603" Action="None" /><!-- DocumentationMustContainValidXml -->
+    <Rule Id="SA1604" Action="None" /><!-- ElementDocumentationMustHaveSummary -->
+    <Rule Id="SA1605" Action="None" /><!-- PartialElementDocumentationMustHaveSummary -->
+    <Rule Id="SA1606" Action="None" /><!-- ElementDocumentationMustHaveSummaryText -->
+    <Rule Id="SA1607" Action="None" /><!-- PartialElementDocumentationMustHaveSummaryText -->
+    <Rule Id="SA1608" Action="None" /><!-- ElementDocumentationMustNotHaveDefaultSummary -->
+    <Rule Id="SA1609" Action="None" /><!-- PropertyDocumentationMustHaveValue -->
+    <Rule Id="SA1610" Action="None" /><!-- PropertyDocumentationMustHaveValueText -->
+    <Rule Id="SA1611" Action="None" /><!-- ElementParametersMustBeDocumented -->
+    <Rule Id="SA1612" Action="None" /><!-- ElementParameterDocumentationMustMatchElementParameters -->
+    <Rule Id="SA1613" Action="None" /><!-- ElementParameterDocumentationMustDeclareParameterName -->
+    <Rule Id="SA1614" Action="None" /><!-- ElementParameterDocumentationMustHaveText -->
+    <Rule Id="SA1615" Action="None" /><!-- ElementReturnValueMustBeDocumented -->
+    <Rule Id="SA1616" Action="None" /><!-- ElementReturnValueDocumentationMustHaveValue -->
+    <Rule Id="SA1617" Action="None" /><!-- VoidReturnValueMustNotBeDocumented -->
+    <Rule Id="SA1618" Action="None" /><!-- GenericTypeParametersMustBeDocumented -->
+    <Rule Id="SA1619" Action="None" /><!-- GenericTypeParametersMustBeDocumentedPartialClass -->
+    <Rule Id="SA1620" Action="None" /><!-- GenericTypeParameterDocumentationMustMatchTypeParameters -->
+    <Rule Id="SA1621" Action="None" /><!-- GenericTypeParameterDocumentationMustDeclareParameterName -->
+    <Rule Id="SA1622" Action="None" /><!-- GenericTypeParameterDocumentationMustHaveText -->
+    <Rule Id="SA1623" Action="None" /><!-- PropertySummaryDocumentationMustMatchAccessors -->
+    <Rule Id="SA1624" Action="None" /><!-- PropertySummaryDocumentationMustOmitSetAccessorWithRestricedAccess -->
+    <Rule Id="SA1625" Action="None" /><!-- ElementDocumentationMustNotBeCopiedAndPasted -->
+    <Rule Id="SA1626" Action="None" /><!-- SingleLineCommentsMustNotUseDocumentationStyleSlashes -->
+    <Rule Id="SA1627" Action="None" /><!-- DocumentationTextMustNotBeEmpty -->
+    <Rule Id="SA1628" Action="None" /><!-- DocumentationTextMustBeginWithACapitalLetter -->
+    <Rule Id="SA1629" Action="None" /><!-- DocumentationTextMustEndWithAPeriod -->
+    <Rule Id="SA1630" Action="None" /><!-- DocumentationTextMustContainWhitespace -->
+    <Rule Id="SA1631" Action="None" /><!-- DocumentationTextMustMeetCharacterPercentage -->
+    <Rule Id="SA1632" Action="None" /><!-- DocumentationTextMustMeetMinimumCharacterLength -->
+    <Rule Id="SA1633" Action="None" /><!-- FileMustHaveHeader -->
+    <Rule Id="SA1649" Action="None" /><!-- FileHeaderFileNameDocumentationMustMatchTypeName -->
+    <Rule Id="SA1652" Action="None" /><!-- EnableXmlDocumentationOutput -->
+
+    <!-- Ordering Rules: mostly off; organize ctor first then by what's coupled together and not by member type and accessibility -->
+    <Rule Id="SA1200" Action="None" /><!-- UsingDirectivesMustBePlacedWithinNamespace -->
+    <Rule Id="SA1201" Action="None" /><!-- ElementsMustAppearInTheCorrectOrder -->
+    <Rule Id="SA1202" Action="None" /><!-- ElementsMustBeOrderedByAccess -->
+    <Rule Id="SA1203" Action="None" /><!-- ConstantsMustAppearBeforeFields -->
+    <Rule Id="SA1204" Action="None" /><!-- StaticElementsMustAppearBeforeInstanceElements -->
+    <Rule Id="SA1205" Action="None" /><!-- PartialElementsMustDeclareAccess -->
+    <Rule Id="SA1206" Action="Warning" /><!-- DeclarationKeywordsMustFollowOrder -->
+    <Rule Id="SA1207" Action="None" /><!-- ProtectedMustComeBeforeInternal -->
+    <Rule Id="SA1208" Action="None" /><!-- SystemUsingDirectivesMustBePlacedBeforeOtherUsingDirectives -->
+    <Rule Id="SA1209" Action="None" /><!-- UsingAliasDirectivesMustBePlacedAfterOtherUsingDirectives -->
+    <Rule Id="SA1210" Action="None" /><!-- UsingDirectivesMustBeOrderedAlphabeticallyByNamespace -->
+    <Rule Id="SA1211" Action="None" /><!-- UsingAliasDirectivesMustBeOrderedAlphabeticallyByAliasName -->
+    <Rule Id="SA1212" Action="None" /><!-- PropertyAccessorsMustFollowOrder -->
+    <Rule Id="SA1213" Action="None" /><!-- EventAccessorsMustFollowOrder -->
+    <Rule Id="SA1214" Action="None" /><!-- ReadonlyElementsMustAppearBeforeNonReadonlyElements -->
+
+    <Rule Id="SA0001" Action="None" /><!-- XmlCommentAnalysisDisabled -->
+
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
+    <Rule Id="AD0001" Action="None" /><!-- analyzers throwing System.NullReferenceException -->
+    <Rule Id="IDE0041" Action="None" /><!-- suggest illegal: Use 'is null' check -->
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
+
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.Features" RuleNamespace="Microsoft.CodeAnalysis.Features">
+
+  </Rules>
+</RuleSet>

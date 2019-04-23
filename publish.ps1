@@ -1,0 +1,25 @@
+param (
+    [string]
+    [Parameter(Mandatory=$true, HelpMessage='Semantic version for the library; example: 1.0.2')]
+    [ValidatePattern('^\d+(\.\d+){2}(-dev)?$')]
+    $SemVer,
+
+    [string]
+    $NugetApiKey
+ )
+
+Push-Location (Split-Path -Path $MyInvocation.MyCommand.Definition -Parent)
+
+$nupkg = Resolve-Path "./publish/App.Metrics.Reporting.ApplicationInsights.$SemVer.nupkg" -ErrorAction Stop
+
+if ($NugetApiKey -eq '') {
+    $NugetApiKey = $env:NUGET_APIKEY_APPMETRICS
+    if ($NugetApiKey -eq '') {
+        Throw 'Missing nuget API key'
+    }
+}
+
+
+& dotnet nuget push $nupkg -k $NugetApiKey -s https://api.nuget.org/v3/index.json
+
+Pop-Location

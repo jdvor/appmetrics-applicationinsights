@@ -1,0 +1,22 @@
+*.cs text diff=csharp
+
+*.csproj text merge=union
+*.sln text merge=union
+*.msbuild text merge=union
+*.config text
+*.md text diff=astextplain
+*.yml text
+*.json text
+*.cmd text
+*.css text diff=css
+*.html text diff=html
+
+*.png binary
+*.dll binary diff=exif
+*.exe binary diff=exif
+*.pdb binary diff=exif
+*.pem binary
+*.pfx binary
+*.xlsx binary
+
+ * text=auto
