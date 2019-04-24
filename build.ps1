@@ -1,7 +1,7 @@
 param (
     [string]
     [Parameter(Mandatory=$true, HelpMessage='Semantic version for the library; example: 1.0.2')]
-    [ValidatePattern('^\d+(\.\d+){2}(-dev)?$')]
+    [ValidatePattern('^\d+(\.\d+){2}(-[a-z0-9]+)?$')]
     $SemVer,
 
     [string]

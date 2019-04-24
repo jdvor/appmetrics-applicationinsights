@@ -9,7 +9,7 @@ namespace App.Metrics.Reporting.ApplicationInsights
     public class ApplicationInsightsReporterOptions
     {
         /// <summary>
-        ///     .
+        ///     Application Insights instrumentation key.
         /// </summary>
         public string InstrumentationKey { get; set; }
 

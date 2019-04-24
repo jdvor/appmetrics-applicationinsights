@@ -23,6 +23,12 @@ namespace App.Metrics.Reporting.ApplicationInsights
         private static readonly ILog Logger = LogProvider.For<ApplicationInsightsReporter>();
         private readonly TelemetryClient client;
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ApplicationInsightsReporter"/> class.
+        /// </summary>
+        /// <param name="options">
+        ///     Configuration for <see cref="ApplicationInsightsReporter"/>.
+        /// </param>
         public ApplicationInsightsReporter(ApplicationInsightsReporterOptions options)
         {
             if (options == null)
