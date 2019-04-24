@@ -17,11 +17,27 @@ namespace App.Metrics.Reporting.ApplicationInsights
     using System.Threading;
     using System.Threading.Tasks;
 
-    public sealed class ApplicationInsightsReporter : IReportMetrics
+    public sealed class ApplicationInsightsReporter : IReportMetrics, IDisposable
     {
         private const string UnitKey = "unit";
         private static readonly ILog Logger = LogProvider.For<ApplicationInsightsReporter>();
+
+        /// <summary>
+        /// Suprisingly <see cref="TelemetryConfiguration"/> implements <see cref="IDisposable"/> unlike <see cref="TelemetryClient"/>.
+        /// https://github.com/Microsoft/ApplicationInsights-dotnet/blob/develop/src/Microsoft.ApplicationInsights/Extensibility/TelemetryConfiguration.cs#L340
+        /// </summary>
+        private readonly TelemetryConfiguration clientCfg;
         private readonly TelemetryClient client;
+        private bool disposed;
+
+        /// <inheritdoc />
+        public IFilterMetrics Filter { get; set; }
+
+        /// <inheritdoc />
+        public TimeSpan FlushInterval { get; set; }
+
+        /// <inheritdoc />
+        public IMetricsOutputFormatter Formatter { get; set; }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ApplicationInsightsReporter"/> class.
@@ -36,23 +52,27 @@ namespace App.Metrics.Reporting.ApplicationInsights
                 throw new ArgumentNullException(nameof(options));
             }
 
-            client = new TelemetryClient(new TelemetryConfiguration(options.InstrumentationKey));
+            clientCfg = new TelemetryConfiguration(options.InstrumentationKey);
+            client = new TelemetryClient(clientCfg);
             FlushInterval = options.FlushInterval > TimeSpan.Zero
                 ? options.FlushInterval
                 : AppMetricsConstants.Reporting.DefaultFlushInterval;
             Filter = options.Filter;
 
-            Logger.Info($"Using Metrics Reporter {this}. FlushInterval: {FlushInterval}");
+            Logger.Info($"Using metrics reporter {nameof(ApplicationInsightsReporter)}. FlushInterval: {FlushInterval}");
         }
 
-        /// <inheritdoc />
-        public IFilterMetrics Filter { get; set; }
+        public void Dispose()
+        {
+            if (disposed)
+            {
+                return;
+            }
 
-        /// <inheritdoc />
-        public TimeSpan FlushInterval { get; set; }
+            clientCfg.Dispose();
 
-        /// <inheritdoc />
-        public IMetricsOutputFormatter Formatter { get; set; }
+            disposed = true;
+        }
 
         /// <inheritdoc />
         public Task<bool> FlushAsync(MetricsDataValueSource metricsData, CancellationToken cancellationToken = default)

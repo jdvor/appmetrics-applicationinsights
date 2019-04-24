@@ -28,63 +28,45 @@ namespace SandboxConsoleApp
 
         public static void Main()
         {
-            //TestTc();
-            //return;
-
             var recordEvery = TimeSpan.FromSeconds(2);
             var reportEvery = TimeSpan.FromSeconds(60);
 
             Init();
 
             TotalTime = Stopwatch.StartNew();
-            var cts = new CancellationTokenSource();
-            backgroundTasks = new[]
+            using (var cts = new CancellationTokenSource())
             {
-                Task.Run(() => Record(recordEvery, cts.Token)),
-                Task.Run(() => Report(reportEvery, cts.Token)),
-            };
-
-            PrintHelp(recordEvery, reportEvery);
-
-            ConsoleKey consoleKey;
-            do
-            {
-                consoleKey = Console.ReadKey().Key;
-                switch (consoleKey)
+                backgroundTasks = new[]
                 {
-                    case ConsoleKey.P:
-                        PrintMetricsToConsole();
-                        break;
+                    Task.Run(() => Record(recordEvery, cts.Token)),
+                    Task.Run(() => Report(reportEvery, cts.Token)),
+                };
 
-                    case ConsoleKey.R:
-                        ReportOnDemand();
-                        break;
+                PrintHelp(recordEvery, reportEvery);
+
+                ConsoleKey consoleKey;
+                do
+                {
+                    consoleKey = Console.ReadKey().Key;
+                    switch (consoleKey)
+                    {
+                        case ConsoleKey.P:
+                            PrintMetricsToConsole();
+                            break;
+
+                        case ConsoleKey.R:
+                            ReportOnDemand();
+                            break;
+                    }
                 }
-            }
-            while (consoleKey != ConsoleKey.Escape);
+                while (consoleKey != ConsoleKey.Escape);
 
-            cts.Cancel();
-            Task.WaitAll(backgroundTasks, 5000);
+                cts.Cancel();
+                Task.WaitAll(backgroundTasks, 5000);
+            }
 
             Console.WriteLine();
             Console.WriteLine($"In {TotalTime.Elapsed} the metrics have been recorded {RecordCount} times and TelemetryClient flushed {FlushCount} times.");
-        }
-
-        private static void TestTc()
-        {
-            var rnd = new Random();
-            var tc = new TelemetryClient(new TelemetryConfiguration("84c12b81-6b0e-4581-b44d-11070f1e8490"));
-            for (int i = 0; i < 300; i++)
-            {
-                tc.GetMetric("tc_counter_one").TrackValue(1);
-                tc.GetMetric("tc_timer_one").TrackValue(rnd.Next(0, 201));
-                tc.GetMetric("tc_counter_two", "apples").TrackValue(rnd.Next(1, 4));
-                tc.GetMetric("tc_counter_two", "pears").TrackValue(1);
-                Console.WriteLine(i);
-                Thread.Sleep(2000);
-            }
-
-            tc.Flush();
         }
 
         private static void Init()
