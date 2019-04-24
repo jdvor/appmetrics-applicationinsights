@@ -1,7 +1,7 @@
 # Application Insights reporter for App.Metrics
 
 ## Usage
-1. Install nuget package: [App.Metrics.Reporting.ApplicationInsights](https://nuget.com)
+1. Install nuget package: [App.Metrics.Reporting.ApplicationInsights](https://www.nuget.org/packages/App.Metrics.Reporting.ApplicationInsights/)
 2. Obtain Application Insights [instrumentation key](https://docs.microsoft.com/en-us/azure/azure-monitor/app/create-new-resource).
 3. Configure App.Metrics like so:
 ```
