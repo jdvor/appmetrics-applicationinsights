@@ -7,7 +7,6 @@
     <PackageId>App.Metrics.Reporting.ApplicationInsights</PackageId>
     <Description>Provides Microsoft Application Insights reporting capability to App Metrics</Description>
     <Authors>jandvorak</Authors>
-    <PackageIconUrl>https://app-metrics.io/images/logo.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/jdvor/appmetrics-applicationinsights</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
