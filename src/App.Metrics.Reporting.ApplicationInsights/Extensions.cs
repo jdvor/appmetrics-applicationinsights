@@ -34,9 +34,9 @@ namespace App.Metrics.Reporting.ApplicationInsights
             }
         }
 
-        internal static void CopyTo(this CounterValue value, MetricTelemetry mt)
+        internal static void CopyTo(this CounterValueSource source, MetricTelemetry mt)
         {
-            mt.Sum = value.Count;
+            mt.Sum = source.ValueProvider.GetValue(source.ResetOnReporting).Count;
         }
 
         internal static void ForwardTo(this CounterValue.SetItem value, MetricTelemetry mt)

@@ -2,8 +2,6 @@ namespace SandboxConsoleApp
 {
     using App.Metrics;
     using App.Metrics.Reporting;
-    using Microsoft.ApplicationInsights;
-    using Microsoft.ApplicationInsights.Extensibility;
     using Microsoft.Extensions.Configuration;
     using Serilog;
     using System;
@@ -158,7 +156,6 @@ namespace SandboxConsoleApp
                         await Task.Delay(Rnd.Value.Next(0, 1001), ct).ConfigureAwait(false);
                     }
 
-                    Console.Write('.');
                     Interlocked.Increment(ref RecordCount);
 
                     sw.Stop();
@@ -190,7 +187,6 @@ namespace SandboxConsoleApp
                     await Task.Delay(every, ct).ConfigureAwait(false);
                     await Task.WhenAll(reporter.RunAllAsync(ct)).ConfigureAwait(false);
                     Interlocked.Increment(ref FlushCount);
-                    Console.Write('*');
                 }
                 catch (TaskCanceledException ex) when (ex.CancellationToken == ct)
                 {

@@ -19,6 +19,7 @@ namespace SandboxConsoleApp
         public static CounterOptions CounterOne => new CounterOptions
         {
             Name = "counter_one",
+            ResetOnReporting = true,
         };
 
         public static CounterOptions CounterTwo => new CounterOptions

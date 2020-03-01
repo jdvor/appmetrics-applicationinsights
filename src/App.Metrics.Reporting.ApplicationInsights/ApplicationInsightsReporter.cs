@@ -163,14 +163,17 @@ namespace App.Metrics.Reporting.ApplicationInsights
         private static IEnumerable<MetricTelemetry> Translate(CounterValueSource source, string contextName, DateTimeOffset now)
         {
             var mt = MetricFactory.CreateMetric(source, contextName, now);
-            source.Value.CopyTo(mt);
+            source.CopyTo(mt);
             yield return mt;
 
-            foreach (var item in source.Value.Items)
+            if (source.ReportSetItems)
             {
-                mt = MetricFactory.CreateMetric(source, contextName, now, item.Item);
-                item.ForwardTo(mt);
-                yield return mt;
+                foreach (var item in source.Value.Items)
+                {
+                    mt = MetricFactory.CreateMetric(source, contextName, now, item.Item);
+                    item.ForwardTo(mt);
+                    yield return mt;
+                }
             }
         }
 
