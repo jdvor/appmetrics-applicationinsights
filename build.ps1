@@ -26,7 +26,7 @@ Get-ChildItem ./ -Include bin,obj,publish,packages -Recurse | ForEach-Object ($_
 # pack App.Metrics.Reporting.ApplicationInsights
 Write-Host '>>> Packaging App.Metrics.Reporting.ApplicationInsights >>>' -ForegroundColor Yellow
 $csproj = Resolve-Path './src\App.Metrics.Reporting.ApplicationInsights/App.Metrics.Reporting.ApplicationInsights.csproj'
-& dotnet pack $csproj -c $Configuration -o $publishDir /p:SemVer=$SemVer /p:Platform=x64 /nologo
+& dotnet pack $csproj -c $Configuration -o $publishDir /p:SemVer=$SemVer /nologo
 
 # publish SandboxConsoleApp
 if ($Sandbox -eq $true) {

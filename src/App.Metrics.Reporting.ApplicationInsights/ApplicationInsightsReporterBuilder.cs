@@ -7,6 +7,7 @@ namespace App.Metrics
     /// <summary>
     ///     Builder for configuring Azure Application Insights reporting using an <see cref="IMetricsReportingBuilder" />.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "ApplicationInsightsReporter")]
     public static class ApplicationInsightsReporterBuilder
     {
         /// <summary>
