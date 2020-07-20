@@ -41,6 +41,7 @@ namespace SandboxConsoleApp
         public static MeterOptions MeterOne => new MeterOptions
         {
             Name = "meter_one",
+            Tags = new MetricTags(new[] { "prop3", "prop4", "DimensionName" }, new[] { "gama", "delta", "bucket" }),
         };
 
         public static TimerOptions TimerOne => new TimerOptions

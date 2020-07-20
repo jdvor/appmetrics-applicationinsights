@@ -1,5 +1,7 @@
 # Application Insights reporter for App.Metrics
 
+[changelog](changelog.md)
+
 ## Usage
 1. Install nuget package: [App.Metrics.Reporting.ApplicationInsights](https://www.nuget.org/packages/App.Metrics.Reporting.ApplicationInsights/)
 2. Obtain Application Insights [instrumentation key](https://docs.microsoft.com/en-us/azure/azure-monitor/app/create-new-resource).
@@ -13,12 +15,33 @@ var metrics = new MetricsBuilder()
     .Build();
 ```
 
+There are two ways how to deal with AppMetrics' items which would be referred to as _dimension 1_ in Application Insights.
+1. Report them as part of the metric name. For example: if on the App.Metric side you would have a single metric _"fruit_count"_ with two dimensions _"apples"_ and _"pears"_
+than three metrics will be reported to Application Insights: _"fruit_count", "fruit_count.apples"_ and _"fruit_count.pears"_. This is default.
+2. Report them under single name and distinguish dimension by using _customDimensions_; see section "AppMetrics item as Application Insights customDimension".
+
 ## How it works
 App.Metrics pre-aggregates metrics and reporters are responsible for publishing such aggregated data.
 Application Insights's type `MetricTelemetry` is used to describe pre-aggregated metrics
 and method `Track(ITelemetry telemetry)` of `TelemetryClient` publishes it.
 
 It just boils down to translating `MetricsDataValueSource` into `IEnumerable<MetricTelemetry>` and publishing the collection using `TelemetryClient`.
+
+## AppMetrics item as Application Insights customDimension
+(rather than part of the name, which is default behavior)
+
+```
+var metrics = new MetricsBuilder()
+    .Configuration.Configure(metricsOptions)
+    .Report.ToApplicationInsights(opts => {
+        opts.InstrumentationKey = "00000000-0000-0000-0000-000000000000";
+        opts.ItemsAsCustomDimensions = true;
+        opts.DefaultCustomDimensionName = "item";
+    })
+    .Build();
+```
+
+If you would like the dimension to have more meaningful name than the default, you can add MetricTag with a name _DimensionName_ to an AppMetrics metric and it will use it instead of a reporter-level default value.
 
 ## Links
 * [App.Metrics documentation](https://www.app-metrics.io/)
@@ -37,11 +60,3 @@ It is what TelemetryClient does when non-pre-aggregation API (`.GetMetric("mycou
 I guess mostly because data statistics _min, max, stddev_ are really only useful for describing smaller batches of uploaded data and not the whole "ever recorded" scope.
 
 Bottom line is: when using App.Metric as a facade to Application Insights do not rely on metric properties _min, max, stddev_ as they will contain something else than you would expect (compared to using TelemetryClient alone for example).
-
-#### 2. Metric dimensions in Azure Portal / Applications Insights
-"Dimension" is primarily a term used in Application Insights; the App.Metrics synonym is "item" as in `Meter.Mark(MeterOptions options, long amount, string item)`.
-
-`MetricTelemetry` does not have a way how to explicitly report dimensions, so this reporter reports them as new metric records with names derived for the parent one.
-
-For example: if on the App.Metric side you would have a single metric _"fruit_count"_ with two dimensions _"apples"_ and _"pears"_
-than three metrics will be reported to Application Insights: _"fruit_count", "fruit_count.apples"_ and _"fruit_count.pears"_.

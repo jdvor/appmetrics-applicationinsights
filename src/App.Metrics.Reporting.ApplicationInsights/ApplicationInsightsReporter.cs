@@ -1,25 +1,17 @@
 namespace App.Metrics.Reporting.ApplicationInsights
 {
-    using App.Metrics.Apdex;
-    using App.Metrics.Counter;
     using App.Metrics.Filters;
     using App.Metrics.Formatters;
-    using App.Metrics.Histogram;
     using App.Metrics.Logging;
-    using App.Metrics.Meter;
-    using App.Metrics.Timer;
     using Microsoft.ApplicationInsights;
-    using Microsoft.ApplicationInsights.DataContracts;
     using Microsoft.ApplicationInsights.Extensibility;
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading;
     using System.Threading.Tasks;
 
     public sealed class ApplicationInsightsReporter : IReportMetrics, IDisposable
     {
-        private const string UnitKey = "unit";
         private static readonly ILog Logger = LogProvider.For<ApplicationInsightsReporter>();
 
         /// <summary>
@@ -28,6 +20,7 @@ namespace App.Metrics.Reporting.ApplicationInsights
         /// </summary>
         private readonly TelemetryConfiguration clientCfg;
         private readonly TelemetryClient client;
+        private readonly IMetricsTranslator translator;
         private bool disposed;
 
         /// <inheritdoc />
@@ -45,13 +38,15 @@ namespace App.Metrics.Reporting.ApplicationInsights
         /// <param name="options">
         ///     Configuration for <see cref="ApplicationInsightsReporter"/>.
         /// </param>
-        public ApplicationInsightsReporter(ApplicationInsightsReporterOptions options)
+        /// <param name="translator"></param>
+        public ApplicationInsightsReporter(ApplicationInsightsReporterOptions options, IMetricsTranslator translator)
         {
             if (options == null)
             {
                 throw new ArgumentNullException(nameof(options));
             }
 
+            this.translator = translator ?? throw new ArgumentNullException(nameof(translator));
             clientCfg = new TelemetryConfiguration(options.InstrumentationKey);
             client = new TelemetryClient(clientCfg);
             FlushInterval = options.FlushInterval > TimeSpan.Zero
@@ -87,7 +82,8 @@ namespace App.Metrics.Reporting.ApplicationInsights
             var count = 0;
             foreach (var ctx in metricsData.Contexts)
             {
-                foreach (var mt in TranslateContext(ctx, now))
+                var context = Filter != null ? ctx.Filter(Filter) : ctx;
+                foreach (var mt in translator.Translate(context, now))
                 {
                     // Although the method comment suggest it is internal and should not be used,
                     // the documentation here https://docs.microsoft.com/en-us/azure/azure-monitor/app/api-custom-events-metrics
@@ -104,119 +100,6 @@ namespace App.Metrics.Reporting.ApplicationInsights
             }
 
             return Task.FromResult(true);
-        }
-
-        private IEnumerable<MetricTelemetry> TranslateContext(MetricsContextValueSource ctx, DateTimeOffset now)
-        {
-            var context = Filter != null ? ctx.Filter(Filter) : ctx;
-            var contextName = context.Context;
-
-            foreach (var source in context.ApdexScores)
-            {
-                yield return Translate(source, contextName, now);
-            }
-
-            foreach (var source in context.Counters)
-            {
-                foreach (var mt in Translate(source, contextName, now))
-                {
-                    yield return mt;
-                }
-            }
-
-            foreach (var source in context.Gauges)
-            {
-                var mt = MetricFactory.CreateMetric(source, contextName, now);
-                mt.Sum = source.Value;
-                yield return mt;
-            }
-
-            foreach (var source in context.Histograms)
-            {
-                yield return Translate(source, contextName, now);
-            }
-
-            foreach (var source in context.Meters)
-            {
-                foreach (var mt in Translate(source, contextName, now))
-                {
-                    yield return mt;
-                }
-            }
-
-            foreach (var source in context.Timers)
-            {
-                foreach (var mt in Translate(source, contextName, now))
-                {
-                    yield return mt;
-                }
-            }
-        }
-
-        private static MetricTelemetry Translate(ApdexValueSource source, string contextName, DateTimeOffset now)
-        {
-            var mt = MetricFactory.CreateMetric(source, contextName, now);
-            source.Value.CopyTo(mt);
-            return mt;
-        }
-
-        private static IEnumerable<MetricTelemetry> Translate(CounterValueSource source, string contextName, DateTimeOffset now)
-        {
-            var mt = MetricFactory.CreateMetric(source, contextName, now);
-            source.CopyTo(mt);
-            yield return mt;
-
-            if (source.ReportSetItems)
-            {
-                foreach (var item in source.Value.Items)
-                {
-                    mt = MetricFactory.CreateMetric(source, contextName, now, item.Item);
-                    item.ForwardTo(mt);
-                    yield return mt;
-                }
-            }
-        }
-
-        private static MetricTelemetry Translate(HistogramValueSource source, string contextName, DateTimeOffset now)
-        {
-            var mt = MetricFactory.CreateMetric(source, contextName, now);
-            source.Value.CopyTo(mt);
-            return mt;
-        }
-
-        private static IEnumerable<MetricTelemetry> Translate(MeterValueSource source, string contextName, DateTimeOffset now)
-        {
-            var unit = source.Value.RateUnit.ToShortString();
-            var mt = MetricFactory.CreateMetric(source, contextName, now);
-            source.Value.CopyTo(mt, unit);
-            yield return mt;
-
-            foreach (var item in source.Value.Items)
-            {
-                mt = MetricFactory.CreateMetric(source, contextName, now, item.Item);
-                item.CopyTo(mt, unit);
-                yield return mt;
-            }
-        }
-
-        private static IEnumerable<MetricTelemetry> Translate(TimerValueSource source, string contextName, DateTimeOffset now)
-        {
-            var mt = MetricFactory.CreateMetric(source, contextName, now);
-            mt.Properties[UnitKey] = source.DurationUnit.ToShortString();
-            source.Value.Histogram.CopyTo(mt);
-            yield return mt;
-
-            var unit = source.Value.Rate.RateUnit.ToShortString();
-            mt = MetricFactory.CreateMetric(source, contextName, now, "rate");
-            source.Value.Rate.CopyTo(mt, unit);
-            yield return mt;
-
-            foreach (var item in source.Value.Rate.Items)
-            {
-                mt = MetricFactory.CreateMetric(source, contextName, now, item.Item);
-                item.CopyTo(mt, unit);
-                yield return mt;
-            }
         }
     }
 }

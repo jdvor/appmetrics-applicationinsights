@@ -11,6 +11,7 @@
     <Rule Id="CA1040" Action="None" /><!-- AvoidEmptyInterfaces -->
     <Rule Id="CA1051" Action="None" /><!-- DoNotDeclareVisibleInstanceFields; turn them into props when needed, uniform access principle is not violated -->
     <Rule Id="CA1056" Action="None" /><!-- UriPropertiesShouldNotBeStrings -->
+    <Rule Id="CA1303" Action="None" /><!-- DoNotPassLiteralsAsLocalizedParameters; localized exception messages are abominations -->
     <Rule Id="CA1305" Action="None" /><!-- SpecifyIFormatProvider; used mostly in cases when format provider means no difference -->
     <Rule Id="CA1307" Action="None" /><!-- SpecifyStringComparison; used mostly in cases when string comparison means no difference -->
     <Rule Id="CA1308" Action="None" /><!-- NormalizeStringsToUppercase -->

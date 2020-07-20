@@ -86,7 +86,11 @@ namespace SandboxConsoleApp
 
             metrics = new MetricsBuilder()
                 .Configuration.Configure(metricsOptions)
-                .Report.ToApplicationInsights(instrumentationKey)
+                .Report.ToApplicationInsights(opts =>
+                {
+                    opts.InstrumentationKey = instrumentationKey;
+                    opts.ItemsAsCustomDimensions = true;
+                })
                 .Build();
 
             reporter = metrics.ReportRunner;

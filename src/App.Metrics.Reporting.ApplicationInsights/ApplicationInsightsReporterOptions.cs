@@ -22,5 +22,16 @@ namespace App.Metrics.Reporting.ApplicationInsights
         /// Gets or sets the interval between flushing metrics.
         /// </summary>
         public TimeSpan FlushInterval { get; set; } = TimeSpan.FromSeconds(60);
+
+        /// <summary>
+        /// If <code>true</code> the <see cref="ItemsAsCustomPropertyMetricsTranslator"/> will be used to translate metrics;
+        /// otherwise <see cref="DefaultMetricsTranslator"/>.
+        /// </summary>
+        public bool ItemsAsCustomDimensions { get; set; }
+
+        /// <summary>
+        /// Default custom property name for AppMetrics' items in Application Insights; the default is 'item'.
+        /// </summary>
+        public string DefaultCustomDimensionName { get; set; } = "item";
     }
 }

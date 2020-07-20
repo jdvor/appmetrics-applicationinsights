@@ -7,7 +7,10 @@ namespace App.Metrics
     /// <summary>
     ///     Builder for configuring Azure Application Insights reporting using an <see cref="IMetricsReportingBuilder" />.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "ApplicationInsightsReporter")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "Reliability",
+        "CA2000:Dispose objects before losing scope",
+        Justification = "AppMetrics is responsible for disposing reporters; this class is just factory.")]
     public static class ApplicationInsightsReporterBuilder
     {
         /// <summary>
@@ -29,7 +32,15 @@ namespace App.Metrics
                 throw new ArgumentNullException(nameof(reportingBuilder));
             }
 
-            var reporter = new ApplicationInsightsReporter(options);
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
+            var translator = options.ItemsAsCustomDimensions
+                ? (IMetricsTranslator)new ItemsAsCustomPropertyMetricsTranslator(options.DefaultCustomDimensionName)
+                : new DefaultMetricsTranslator();
+            var reporter = new ApplicationInsightsReporter(options, translator);
 
             return reportingBuilder.Using(reporter);
         }
@@ -48,16 +59,9 @@ namespace App.Metrics
             this IMetricsReportingBuilder reportingBuilder,
             Action<ApplicationInsightsReporterOptions> setupAction)
         {
-            if (reportingBuilder == null)
-            {
-                throw new ArgumentNullException(nameof(reportingBuilder));
-            }
-
             var options = new ApplicationInsightsReporterOptions();
             setupAction?.Invoke(options);
-            var reporter = new ApplicationInsightsReporter(options);
-
-            return reportingBuilder.Using(reporter);
+            return ToApplicationInsights(reportingBuilder, options);
         }
 
         /// <summary>
@@ -72,19 +76,8 @@ namespace App.Metrics
         /// </returns>
         public static IMetricsBuilder ToApplicationInsights(this IMetricsReportingBuilder reportingBuilder, string instrumentationKey)
         {
-            if (reportingBuilder == null)
-            {
-                throw new ArgumentNullException(nameof(reportingBuilder));
-            }
-
-            var options = new ApplicationInsightsReporterOptions
-            {
-                InstrumentationKey = instrumentationKey,
-            };
-
-            var reporter = new ApplicationInsightsReporter(options);
-
-            return reportingBuilder.Using(reporter);
+            var options = new ApplicationInsightsReporterOptions { InstrumentationKey = instrumentationKey };
+            return ToApplicationInsights(reportingBuilder, options);
         }
     }
 }
