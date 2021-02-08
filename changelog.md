@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.1.0
+_8afea1e_ [#7](https://github.com/jdvor/appmetrics-applicationinsights/pull/7) PR Added the ability to configure application insights with a ITelemetryChannel
+
 ## v2.0.0
 _1fd915b_ added option to report AppMetrics items as customDimension in Application Insights rather than items being part of the metric name (which is default) [#6](https://github.com/jdvor/appmetrics-applicationinsights/issues/6)
 
