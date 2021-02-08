@@ -5,10 +5,8 @@
 
     <!-- dependencies: library versions -->
     <AppMetricsVersion>4.1.0</AppMetricsVersion>
-    <ApplicationInsightsVersion>2.14.0</ApplicationInsightsVersion>
-    <FxCopAnalyzersVersion>3.0.0</FxCopAnalyzersVersion>
+    <ApplicationInsightsVersion>2.16.0</ApplicationInsightsVersion>
     <StyleCopAnalyzersVersion>1.1.118</StyleCopAnalyzersVersion>
-    <JetBrainsAnnotationsVersion>2020.1.0</JetBrainsAnnotationsVersion>
 
   </PropertyGroup>
 </Project>
