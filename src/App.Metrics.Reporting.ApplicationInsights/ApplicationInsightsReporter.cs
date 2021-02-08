@@ -47,7 +47,7 @@ namespace App.Metrics.Reporting.ApplicationInsights
             }
 
             this.translator = translator ?? throw new ArgumentNullException(nameof(translator));
-            clientCfg = new TelemetryConfiguration(options.InstrumentationKey);
+            clientCfg = new TelemetryConfiguration(options.InstrumentationKey, options.ITelemetryChannel);
             client = new TelemetryClient(clientCfg);
             FlushInterval = options.FlushInterval > TimeSpan.Zero
                 ? options.FlushInterval
