@@ -47,7 +47,7 @@ If you would like the dimension to have more meaningful name than the default, y
 * [App.Metrics documentation](https://www.app-metrics.io/)
 * [Application Insights API for custom events and metrics](https://docs.microsoft.com/en-us/azure/azure-monitor/app/api-custom-events-metrics)
 
-## Known issues / shortcomings
+## Known issues / shortcomings / gotchas
 
 #### 1. Aggregation scope
 With regards to pre-aggregated data statistics (min, max, stddev) there are two types of App.Metric value sources:
@@ -60,3 +60,11 @@ It is what TelemetryClient does when non-pre-aggregation API (`.GetMetric("mycou
 I guess mostly because data statistics _min, max, stddev_ are really only useful for describing smaller batches of uploaded data and not the whole "ever recorded" scope.
 
 Bottom line is: when using App.Metric as a facade to Application Insights do not rely on metric properties _min, max, stddev_ as they will contain something else than you would expect (compared to using TelemetryClient alone for example).
+
+#### 2. Reporters need help to actually publish (in some application contexts)
+Reporter alone does not actively publishes the metric data. Something must periodically call its `FlushAsync` method.<br/> 
+In ASP.NET Core application this is done by [MetricsReporterBackgroundService](https://github.com/AppMetrics/AppMetrics/blob/7f490edb72ac5203ea4b2fa057a187649ae70381/src/Extensions/src/App.Metrics.Extensions.Hosting/MetricsReporterBackgroundService.cs), which is a part of AppMetrics repository and nuget packages.<br/>
+See [Bootsrapping Startup.cs](https://www.app-metrics.io/web-monitoring/aspnet-core/reporting/) how it is registered.<br/>
+Everywhere else it is up to you to implement this periodic "nudging" of the AppMetrics' reporters.
+
+[Simple example](https://github.com/jdvor/appmetrics-applicationinsights/blob/master/sample/SandboxConsoleApp/Program.cs#L40) in this repository.
