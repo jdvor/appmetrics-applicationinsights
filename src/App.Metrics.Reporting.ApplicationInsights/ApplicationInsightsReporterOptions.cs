@@ -1,8 +1,8 @@
 namespace App.Metrics.Reporting.ApplicationInsights
 {
     using App.Metrics.Filters;
-    using System;
     using Microsoft.ApplicationInsights.Channel;
+    using System;
 
     /// <summary>
     /// Provides programmatic configuration of Microsoft Application Insights reporting in the App Metrics framework.
@@ -12,17 +12,17 @@ namespace App.Metrics.Reporting.ApplicationInsights
         /// <summary>
         ///     Application Insights instrumentation key.
         /// </summary>
-        public string InstrumentationKey { get; set; }
+        public string InstrumentationKey { get; set; } = string.Empty;
 
         /// <summary>
-        ///     Application Insights telemetry channel to provide with this configuration instance
+        ///     Application Insights telemetry channel to provide with this configuration instance.
         /// </summary>
-        public ITelemetryChannel ITelemetryChannel { get; set; }
+        public ITelemetryChannel? ITelemetryChannel { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="IFilterMetrics" /> to use for just this reporter.
         /// </summary>
-        public IFilterMetrics Filter { get; set; }
+        public IFilterMetrics? Filter { get; set; }
 
         /// <summary>
         /// Gets or sets the interval between flushing metrics.

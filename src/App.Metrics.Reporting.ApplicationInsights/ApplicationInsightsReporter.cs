@@ -24,13 +24,13 @@ namespace App.Metrics.Reporting.ApplicationInsights
         private bool disposed;
 
         /// <inheritdoc />
-        public IFilterMetrics Filter { get; set; }
+        public IFilterMetrics? Filter { get; set; }
 
         /// <inheritdoc />
         public TimeSpan FlushInterval { get; set; }
 
         /// <inheritdoc />
-        public IMetricsOutputFormatter Formatter { get; set; }
+        public IMetricsOutputFormatter? Formatter { get; set; }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ApplicationInsightsReporter"/> class.
@@ -52,7 +52,10 @@ namespace App.Metrics.Reporting.ApplicationInsights
             FlushInterval = options.FlushInterval > TimeSpan.Zero
                 ? options.FlushInterval
                 : AppMetricsConstants.Reporting.DefaultFlushInterval;
-            Filter = options.Filter;
+            if (options.Filter != null)
+            {
+                Filter = options.Filter;
+            }
 
             Logger.Info($"Using metrics reporter {nameof(ApplicationInsightsReporter)}. FlushInterval: {FlushInterval}");
         }

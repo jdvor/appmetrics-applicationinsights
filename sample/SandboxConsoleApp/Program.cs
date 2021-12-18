@@ -15,7 +15,7 @@ namespace SandboxConsoleApp
 
     public static class Program
     {
-        private static readonly ThreadLocal<Random> Rnd = new ThreadLocal<Random>(() => new Random(Environment.TickCount));
+        private static readonly ThreadLocal<Random> Rnd = new(() => new Random(Environment.TickCount));
         private static ILogger Logger;
         private static IMetricsRoot metrics;
         private static IRunMetricsReports reporter;
@@ -205,12 +205,10 @@ namespace SandboxConsoleApp
 
             foreach (var fmt in metrics.OutputMetricsFormatters)
             {
-                using (var ms = new MemoryStream())
-                {
-                    fmt.WriteAsync(ms, metricsData).GetAwaiter().GetResult();
-                    var txt = Encoding.UTF8.GetString(ms.ToArray());
-                    Console.WriteLine(txt);
-                }
+                using var ms = new MemoryStream();
+                fmt.WriteAsync(ms, metricsData).GetAwaiter().GetResult();
+                var txt = Encoding.UTF8.GetString(ms.ToArray());
+                Console.WriteLine(txt);
             }
         }
 
