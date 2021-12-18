@@ -1,7 +1,7 @@
 # Changelog
 
 ## v2.2.0
-_?_ updated AppMetrics to 4.3.0 and ApplicationInsights to 2.20.0; changes in code analysis; nullable enabled; updated SanboxConsoleApp to net6.0
+_e36d902c_ updated AppMetrics to 4.3.0 and ApplicationInsights to 2.20.0; changes in code analysis; nullable enabled; updated SanboxConsoleApp to net6.0
 
 ## v2.1.0
 _8afea1e_ [#7](https://github.com/jdvor/appmetrics-applicationinsights/pull/7) PR Added the ability to configure application insights with a ITelemetryChannel
