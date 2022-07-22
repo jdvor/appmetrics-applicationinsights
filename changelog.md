@@ -1,10 +1,10 @@
 # Changelog
 
 ## v3.0.0
-_xxxxxxxx_ removed configuration option by instrumentation key; now it only can be configured by full connection string [#10](https://github.com/jdvor/appmetrics-applicationinsights/issues/10); updated to ApplicationInsights to 2.21.0; started publishing source as snupkg packages.
+_0f82c02_ removed configuration option by instrumentation key; now it only can be configured by full connection string [#10](https://github.com/jdvor/appmetrics-applicationinsights/issues/10); updated to ApplicationInsights to 2.21.0; started publishing source as snupkg packages.
 
 ## v2.2.0
-_e36d902c_ updated AppMetrics to 4.3.0 and ApplicationInsights to 2.20.0; changes in code analysis; nullable enabled; updated SanboxConsoleApp to net6.0
+_e36d902_ updated AppMetrics to 4.3.0 and ApplicationInsights to 2.20.0; changes in code analysis; nullable enabled; updated SanboxConsoleApp to net6.0
 
 ## v2.1.0
 _8afea1e_ [#7](https://github.com/jdvor/appmetrics-applicationinsights/pull/7) PR Added the ability to configure application insights with a ITelemetryChannel
