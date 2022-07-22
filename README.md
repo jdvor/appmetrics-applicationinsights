@@ -4,14 +4,14 @@
 
 ## Usage
 1. Install nuget package: [App.Metrics.Reporting.ApplicationInsights](https://www.nuget.org/packages/App.Metrics.Reporting.ApplicationInsights/)
-2. Obtain Application Insights [instrumentation key](https://docs.microsoft.com/en-us/azure/azure-monitor/app/create-new-resource).
+2. Obtain Application Insights [connection string](https://docs.microsoft.com/en-us/azure/azure-monitor/app/create-new-resource).
 3. Configure App.Metrics like so:
 ```
-var instrumentationKey = "00000000-0000-0000-0000-000000000000";
+var connectionString = "InstrumentationKey=...;IngestionEndpoint=...";
 
 var metrics = new MetricsBuilder()
     .Configuration.Configure(metricsOptions)
-    .Report.ToApplicationInsights(instrumentationKey)
+    .Report.ToApplicationInsights(connectionString)
     .Build();
 ```
 
@@ -34,7 +34,7 @@ It just boils down to translating `MetricsDataValueSource` into `IEnumerable<Met
 var metrics = new MetricsBuilder()
     .Configuration.Configure(metricsOptions)
     .Report.ToApplicationInsights(opts => {
-        opts.InstrumentationKey = "00000000-0000-0000-0000-000000000000";
+        opts.ConnectionString = "...";
         opts.ItemsAsCustomDimensions = true;
         opts.DefaultCustomDimensionName = "item";
     })
