@@ -3,23 +3,22 @@
   <Import Project="..\shared.props" />
 
   <PropertyGroup>
+    <AnalysisMode>Recommended</AnalysisMode>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <LangVersion>latest</LangVersion>
-    <DebugType>embedded</DebugType>
     <Nullable>enable</Nullable>
 
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
-    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+<!--    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>-->
+<!--    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>-->
+<!--    <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>-->
+<!--    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>-->
+<!--    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>-->
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="$(StyleCopAnalyzersVersion)" PrivateAssets="all"/>
     <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="$(NetAnalyzersVersion)" PrivateAssets="all"/>
   </ItemGroup>
-
 
 </Project>

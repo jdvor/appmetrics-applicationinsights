@@ -11,6 +11,7 @@ param (
 Push-Location (Split-Path -Path $MyInvocation.MyCommand.Definition -Parent)
 
 $nupkg = Resolve-Path "./publish/App.Metrics.Reporting.ApplicationInsights.$SemVer.nupkg" -ErrorAction Stop
+$snupkg = Resolve-Path "./publish/App.Metrics.Reporting.ApplicationInsights.$SemVer.snupkg" -ErrorAction Stop
 
 if ($NugetApiKey -eq '') {
     $NugetApiKey = $env:NUGET_APIKEY_APPMETRICS
@@ -19,7 +20,7 @@ if ($NugetApiKey -eq '') {
     }
 }
 
-
-& dotnet nuget push $nupkg -k $NugetApiKey -s https://api.nuget.org/v3/index.json
+& dotnet nuget push $nupkg -k $NugetApiKey -s https://api.nuget.org/v3/index.json --skip-duplicate
+& dotnet nuget push $snupkg -k $NugetApiKey -s https://api.nuget.org/v3/index.json --skip-duplicate
 
 Pop-Location

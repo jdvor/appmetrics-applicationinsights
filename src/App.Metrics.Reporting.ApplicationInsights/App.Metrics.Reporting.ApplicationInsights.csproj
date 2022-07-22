@@ -13,11 +13,15 @@
     <PackageTags>appmetrics;reporting;applicationinsights</PackageTags>
     <RepositoryUrl>git://github.com/jdvor/appmetrics-applicationinsights</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="App.Metrics.Core" Version="$(AppMetricsVersion)" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="$(ApplicationInsightsVersion)" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="$(SourceLinkVersion)" PrivateAssets="All"/>
   </ItemGroup>
 
 </Project>

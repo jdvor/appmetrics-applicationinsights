@@ -6,6 +6,6 @@ namespace App.Metrics.Reporting.ApplicationInsights
 
     public interface IMetricsTranslator
     {
-        IEnumerable<MetricTelemetry> Translate(MetricsContextValueSource ctx, DateTimeOffset now);
+        IEnumerable<MetricTelemetry> Translate(MetricsContextValueSource context, DateTimeOffset now);
     }
 }

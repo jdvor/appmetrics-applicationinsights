@@ -1,4 +1,9 @@
-appsettings.dev.json
+publish/
+packages/
+BenchmarkDotNet.Artifacts/
+local.settings.json
+*.dev.json
+AssemblyInfoGenerated.cs
 
 ### Csharp ###
 

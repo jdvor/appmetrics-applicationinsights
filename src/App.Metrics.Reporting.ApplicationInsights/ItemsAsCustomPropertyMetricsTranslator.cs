@@ -9,7 +9,6 @@ namespace App.Metrics.Reporting.ApplicationInsights
     using Microsoft.ApplicationInsights.DataContracts;
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
 
     public class ItemsAsCustomPropertyMetricsTranslator : IMetricsTranslator
     {
@@ -207,7 +206,7 @@ namespace App.Metrics.Reporting.ApplicationInsights
             for (int i = 0; i < tags.Count; i++)
             {
                 var key = tags.Keys[i];
-                if (string.Compare(key, DimensionNameKey, true, CultureInfo.InvariantCulture) == 0)
+                if (string.Equals(key, DimensionNameKey, StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }
@@ -220,7 +219,7 @@ namespace App.Metrics.Reporting.ApplicationInsights
         {
             for (int i = 0; i < tags.Count; i++)
             {
-                if (string.Compare(tags.Keys[i], DimensionNameKey, true, CultureInfo.InvariantCulture) == 0)
+                if (string.Equals(tags.Keys[i], DimensionNameKey, StringComparison.OrdinalIgnoreCase))
                 {
                     return tags.Values[i];
                 }

@@ -52,8 +52,8 @@ If you would like the dimension to have more meaningful name than the default, y
 #### 1. Aggregation scope
 With regards to pre-aggregated data statistics (min, max, stddev) there are two types of App.Metric value sources:
 
-1. Configurable cumulative - (counter), which are indefinately cummulative by default, but can be configured in their respective options using property `ResetOnReporting` to start new aggregation scope when the last one is reported.
-2. Indefinately cumulative - (meter, histogram, apdex, timer), which means that they will start new aggregation scope only when IMetricsRoot is created (in practice this usually means when application restarts).
+1. Configurable cumulative - (counter), which are indefinitely cumulative by default, but can be configured in their respective options using property `ResetOnReporting` to start new aggregation scope when the last one is reported.
+2. Indefinitely cumulative - (meter, histogram, apdex, timer), which means that they will start new aggregation scope only when IMetricsRoot is created (in practice this usually means when application restarts).
 
 AI clearly favors the first approach.<br/>
 It is what TelemetryClient does when non-pre-aggregation API (`.GetMetric("mycounter").TrackValue(2)`) is used and therefore aggregation strategy is under its control.
@@ -64,7 +64,7 @@ Bottom line is: when using App.Metric as a facade to Application Insights do not
 #### 2. Reporters need help to actually publish (in some application contexts)
 Reporter alone does not actively publishes the metric data. Something must periodically call its `FlushAsync` method.<br/> 
 In ASP.NET Core application this is done by [MetricsReporterBackgroundService](https://github.com/AppMetrics/AppMetrics/blob/7f490edb72ac5203ea4b2fa057a187649ae70381/src/Extensions/src/App.Metrics.Extensions.Hosting/MetricsReporterBackgroundService.cs), which is a part of AppMetrics repository and nuget packages.<br/>
-See [Bootsrapping Startup.cs](https://www.app-metrics.io/web-monitoring/aspnet-core/reporting/) how it is registered.<br/>
+See [Bootstrapping Startup.cs](https://www.app-metrics.io/web-monitoring/aspnet-core/reporting/) how it is registered.<br/>
 Everywhere else it is up to you to implement this periodic "nudging" of the AppMetrics' reporters.
 
 [Simple example](https://github.com/jdvor/appmetrics-applicationinsights/blob/master/sample/SandboxConsoleApp/Program.cs#L40) in this repository.

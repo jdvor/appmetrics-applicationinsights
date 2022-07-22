@@ -9,12 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SandboxConsoleApp", "sample
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution", "solution", "{BCED51AD-033F-49C8-825A-3469713CEE69}"
 	ProjectSection(SolutionItems) = preProject
-		.globalconfig = .globalconfig
 		build.ps1 = build.ps1
 		changelog.md = changelog.md
 		publish.ps1 = publish.ps1
 		README.md = README.md
 		shared.props = shared.props
+		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{52845696-DD2A-43DD-8211-85CC926616E0}"

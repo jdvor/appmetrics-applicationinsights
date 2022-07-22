@@ -10,14 +10,14 @@ namespace App.Metrics.Reporting.ApplicationInsights
     public class ApplicationInsightsReporterOptions
     {
         /// <summary>
-        ///     Application Insights instrumentation key.
+        ///     Application Insights connection string.
         /// </summary>
-        public string InstrumentationKey { get; set; } = string.Empty;
+        public string ConnectionString { get; set; } = string.Empty;
 
         /// <summary>
         ///     Application Insights telemetry channel to provide with this configuration instance.
         /// </summary>
-        public ITelemetryChannel? ITelemetryChannel { get; set; }
+        public ITelemetryChannel? TelemetryChannel { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="IFilterMetrics" /> to use for just this reporter.

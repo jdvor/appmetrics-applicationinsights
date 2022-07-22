@@ -1,25 +1,86 @@
-# top-most EditorConfig file
 root = true
 
-# Don't use tabs for indentation.
 [*]
 indent_style = space
 # (Please don't specify an indent_size here; that has too many unintended consequences.)
 
-# Code files
-[*.{cs,csx,vb,vbx}]
+[*.{cs,csx,json,yml,xml,proto,md,ps1,sh}]
 indent_size = 4
 insert_final_newline = true
+trim_trailing_whitespace = true
+end_of_line = lf
 charset = utf-8
 
-# Xml project files
-[*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj}]
+[*.{cs,csx,proto,ps1,sh}]
+max_line_length = 120
+
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = 120
+
+[*.{json,yml,xml,csproj,sln}]
 indent_size = 2
 
-# Xml config files
-[*.{props,targets,ruleset,config,nuspec,resx,vsixmanifest,vsct}]
-indent_size = 2
 
-# JSON files
-[*.json]
-indent_size = 2
+[*.cs]
+# everything bellow this line should be in .globalconfig file, but Rider does not yet support it
+# https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/configuration-options
+# https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/code-style-rule-options
+# https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/style-rules/
+
+csharp_using_directive_placement = inside_namespace:warning
+
+# Imports
+dotnet_separate_import_directive_groups = false
+dotnet_sort_system_directives_first = false
+
+# Code
+
+dotnet_diagnostic.CA1010.severity = none       # CollectionsShouldImplementGenericInterface
+dotnet_diagnostic.CA1031.severity = none       # DoNotCatchGeneralExceptionTypes
+dotnet_diagnostic.CA1040.severity = none       # AvoidEmptyInterfaces
+dotnet_diagnostic.CA1056.severity = none       # UriPropertiesShouldNotBeStrings
+dotnet_diagnostic.CA1062.severity = none       # ValidateArgumentsOfPublicMethods
+dotnet_diagnostic.CA1303.severity = none       # DoNotPassLiteralsAsLocalizedParameters
+dotnet_diagnostic.CA1305.severity = none       # SpecifyIFormatProvider; used mostly in cases when format provider means no difference
+dotnet_diagnostic.CA1307.severity = none       # SpecifyStringComparison; used mostly in cases when string comparison means no difference
+dotnet_diagnostic.CA1714.severity = none       # FlagsEnumsShouldHavePluralNames
+dotnet_diagnostic.CA1819.severity = none       # PropertiesShouldNotReturnArrays
+dotnet_diagnostic.CA1822.severity = suggestion # Mark members as static
+dotnet_diagnostic.CA2225.severity = none       # OperatorOverloadsHaveNamedAlternates
+
+
+# Style
+
+
+dotnet_diagnostic.SA1101.severity = none       # PrefixLocalCallsWithThis
+dotnet_diagnostic.SA1124.severity = none       # DoNotUseRegions
+
+
+# Style - Documentation
+# everything off; otherwise it leads to anemic, high noise-to-signal documentation
+
+dotnet_analyzer_diagnostic.category-Documentation.severity = none
+dotnet_analyzer_diagnostic.category-StyleCop.CSharp.DocumentationRules.severity = none
+
+dotnet_diagnostic.CS1591.severity = none       # Missing XML comment for publicly visible type or member
+
+
+# Style - Ordering Rules
+# mostly off; organize ctor first then by what's coupled together and not by member type and accessibility
+
+dotnet_diagnostic.SA1200.severity = none       # UsingDirectivesMustBePlacedWithinNamespace
+dotnet_diagnostic.SA1201.severity = none       # ElementsMustAppearInTheCorrectOrder
+dotnet_diagnostic.SA1202.severity = none       # ElementsMustBeOrderedByAccess
+dotnet_diagnostic.SA1203.severity = warning    # ConstantsMustAppearBeforeFields
+dotnet_diagnostic.SA1204.severity = none       # StaticElementsMustAppearBeforeInstanceElements
+dotnet_diagnostic.SA1205.severity = none       # PartialElementsMustDeclareAccess
+dotnet_diagnostic.SA1206.severity = warning    # DeclarationKeywordsMustFollowOrder
+dotnet_diagnostic.SA1207.severity = none       # ProtectedMustComeBeforeInternal
+dotnet_diagnostic.SA1208.severity = none       # SystemUsingDirectivesMustBePlacedBeforeOtherUsingDirectives
+dotnet_diagnostic.SA1209.severity = warning    # UsingAliasDirectivesMustBePlacedAfterOtherUsingDirectives
+dotnet_diagnostic.SA1210.severity = warning    # UsingDirectivesMustBeOrderedAlphabeticallyByNamespace
+dotnet_diagnostic.SA1211.severity = warning    # UsingAliasDirectivesMustBeOrderedAlphabeticallyByAliasName
+dotnet_diagnostic.SA1212.severity = none       # PropertyAccessorsMustFollowOrder
+dotnet_diagnostic.SA1213.severity = none       # EventAccessorsMustFollowOrder
+dotnet_diagnostic.SA1214.severity = warning    # ReadonlyElementsMustAppearBeforeNonReadonlyElements

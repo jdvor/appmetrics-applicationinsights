@@ -5,10 +5,10 @@
 
     <!-- dependencies: library versions -->
     <AppMetricsVersion>4.3.0</AppMetricsVersion>
-    <ApplicationInsightsVersion>2.20.0</ApplicationInsightsVersion>
-    <StyleCopAnalyzersVersion>1.2.0-beta.376</StyleCopAnalyzersVersion>
+    <ApplicationInsightsVersion>2.21.0</ApplicationInsightsVersion>
+    <StyleCopAnalyzersVersion>1.2.0-beta.435</StyleCopAnalyzersVersion>
     <NetAnalyzersVersion>6.0.0</NetAnalyzersVersion>
-
+    <SourceLinkVersion>1.1.1</SourceLinkVersion>
 
   </PropertyGroup>
 </Project>
